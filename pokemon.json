@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Bulbasaur",
+    "types": ["Grass", "Poison"],
+    "characteristics": {
+      "hp": 45,
+      "attack": 49,
+      "defense": 49,
+      "speed": 45
+    },
+    "description": "A strange seed was planted on its back at birth. The plant sprouts and grows with this Pokémon."
+  },
+  {
+    "id": 4,
+    "name": "Charmander",
+    "types": ["Fire"],
+    "characteristics": {
+      "hp": 39,
+      "attack": 52,
+      "defense": 43,
+      "speed": 65
+    },
+    "description": "From the time it is born, a flame burns at the tip of its tail. Its life would end if the flame were to go out."
+  },
+  {
+    "id": 7,
+    "name": "Squirtle",
+    "types": ["Water"],
+    "characteristics": {
+      "hp": 44,
+      "attack": 48,
+      "defense": 65,
+      "speed": 43
+    },
+    "description": "When it retracts its long neck into its shell, it squirts out water with vigorous force."
+  },
+  {
+    "id": 25,
+    "name": "Pikachu",
+    "types": ["Electric"],
+    "characteristics": {
+      "hp": 35,
+      "attack": 55,
+      "defense": 40,
+      "speed": 90
+    },
+    "description": "When several of these Pokémon gather, their electricity could build and cause lightning storms."
+  }
+]
