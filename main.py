@@ -1,5 +1,5 @@
 # Libraries
-from fastapi import FastAPI,Path
+from fastapi import FastAPI,Path,HTTPException,Query
 import json
 
 # App object Instantiated
@@ -41,7 +41,7 @@ def view_pokemon(pokemon_id:str = Path(
                                             # Path Function parameters and Validation.
                                             ...,
                                             description = 'A Integer Number ID of the Pokemon',
-                                            example = '1,5,10'
+                                            example = '10'
                             )
 ):
 
@@ -49,6 +49,45 @@ def view_pokemon(pokemon_id:str = Path(
 
     if pokemon_id in data:
         return data[pokemon_id]
-    return {
-                'message' : 'Pokemon Not Found @__@'
-            }
+    raise HTTPException(
+                            status_code=404,
+                            detail = 'Pokemon Not Found @_@'
+    )
+
+
+# Query Parameter 
+@app.get('/sort')
+def sort_pokemons(
+                    sort_by : str = Query(
+                                            ..., #The dots mean the values are required
+                                            description = 'Sort Values Based on attack or defense .'
+                                        ),
+                    order : str = Query(
+                                            'asc', # This value is not requried to fill
+                                            description = 'Sort Values in Ascending or Descending order.'
+                                        )
+):
+    valid_fields = ['attack','defense']
+
+    # Check whether the fields are valid or not
+    if sort_by not in valid_fields:
+        raise HTTPException(
+                            status_code=404,
+                            detail = f' Invalid field select from valid_fields : {valid_fields} '
+        )
+    
+    # Load the data
+    data = load_data()
+
+    # Sorting Logic
+    is_reverse = True if order.lower() == 'desc' else False
+
+    sorted_data = sorted(
+        data.items(),
+        key=lambda x: x[1].get(sort_by, 0),
+        reverse=is_reverse
+    )
+
+    return dict(sorted_data)
+
+    # demo url : http://localhost:8000/sort?sort_by=attack&order=desc | http://localhost:8000/docs
