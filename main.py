@@ -1,5 +1,5 @@
 # Libraries
-from fastapi import FastAPI
+from fastapi import FastAPI,Path
 import json
 
 # App object Instantiated
@@ -25,7 +25,7 @@ def main_page():
 @app.get('/about')
 def about_page():
     return {
-                'message' : 'A simple Pokemon Management System to get a overview of the Pokemons when we'
+                'message' : 'A simple Pokemon Management System to get a overview of the Pokemons when we '
                              'dont have our poketab with us.'
     }
 
@@ -34,3 +34,21 @@ def about_page():
 def view():
     data = load_data()
     return data
+
+# Path Param function
+@app.get('/view/{pokemon_id}')
+def view_pokemon(pokemon_id:str = Path(     
+                                            # Path Function parameters and Validation.
+                                            ...,
+                                            description = 'A Integer Number ID of the Pokemon',
+                                            example = '1,5,10'
+                            )
+):
+
+    data = load_data()
+
+    if pokemon_id in data:
+        return data[pokemon_id]
+    return {
+                'message' : 'Pokemon Not Found @__@'
+            }
