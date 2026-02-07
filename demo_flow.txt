@@ -1,0 +1,18 @@
+To exectute a demo FastAPI project :
+
+    First Install the libraries as in requirement.txt.
+
+    Create A app object in a python app and set the routes for that application with some message to return/display.
+
+    Run this command in terminal :   uvicorn main:app --reload 
+    # Reload so that the webserver automatically reloads when detected changes.
+    #Also we can check for changes and request actively in terminal with the help of above command.
+
+    #NOTE: main is the file_name for the python code which contains the app object.
+
+    A localhost link will be visible in terminal , clicking it we will be redirected to the page
+    # If we need to switch to other routes we can specify the route in the above address bar of the browser
+    for example : if we made a '/about' route than : path/about will redirect to the about logic.
+
+    To check the documentation go to route : path/docs
+
