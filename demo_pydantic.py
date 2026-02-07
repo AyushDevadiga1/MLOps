@@ -23,3 +23,27 @@ load_pokemon('ghastly','one')
 # Now more code @-@ , to handle this we have the pydantic module.
 
 
+# Steps for Pydantic : 
+'''
+'''
+
+# Now rewrittng with pydantic version
+
+from pydantic import BaseModel
+
+# Always use BaseModel as we dont have __init_ function and use hints to validate dtype instead .
+class Pokemon(BaseModel):
+
+    # Defined schema / Rules
+    name : str 
+    age : int 
+
+# Our Main function
+def load_pokemon(pokemon : Pokemon): # Now instead of getting the variables independently we get a Pokemon object , so we modify the logic accordingly.
+    print(f'{pokemon.name}\n{pokemon.age}')
+    print('Variables validated successfuly !')
+
+pokemon_info = { 'name' : 'Ghastly' , 'age' : 'hellow'}
+
+poke1 = Pokemon(**pokemon_info)
+load_pokemon(poke1)
