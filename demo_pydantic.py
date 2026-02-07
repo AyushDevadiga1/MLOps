@@ -29,7 +29,7 @@ load_pokemon('ghastly','one')
 
 # Now rewrittng with pydantic version
 
-from pydantic import BaseModel,EmailStr,AnyUrl,Field,field_validator
+from pydantic import BaseModel,EmailStr,AnyUrl,Field,field_validator,model_validator
 from typing import List,Optional,Annotated
 
 # Always use BaseModel as we dont have __init_ function and use hints to validate dtype instead .
@@ -49,7 +49,7 @@ class Pokemon(BaseModel):
                         examples=['haunter','gangar']
                         )
                     ]
-    age : int = Field(gt=0 ,lt=25)
+    age : int 
     attack : int = Field(gt=0 ,lt=100)
     defense : int = Field(gt=0 ,lt=100)
     desc : List[str] # We are validating the container and the elemnt also (2Way).
@@ -63,32 +63,62 @@ class Pokemon(BaseModel):
     email : EmailStr
     
     # We use this when we have custom logic which cant be handled by the CustomDtypes by Pydantic
-    @field_validator(email) # To validate the email
-    @classmethod # To specify the method type
+    @field_validator('email') # To validate the email
+    @classmethod # To specify the method type , can be ommited as it is by default behavioue
 
     def email_validator(cls,value): # To pass the class instance and the value for which we are validating
 
         valid_domains = ['gmail.com','yahoo.com']
-
         domain_name = value.split('@')[-1]
-
         if domain_name not in valid_domains:
             raise ValueError('Not a Valid Domain')
         return value
 
+    @field_validator('name')
+    @classmethod
+    def upper_name(cls,value):
+        return value.upper()
+    
+    # Field Validator is only for a single field
+    @field_validator('age',mode='after') 
+    # The mode when set to after will first perform the type coercion and then validate using the function ;
+    #  by default we have default mode = 'after'
+    @classmethod
+    def validate_age(cls,value):
+        if value>0 and value<26:
+            return value
+        else:
+            raise ValueError('Age Should be in range 1 - 25')
+        
+    # Suppose if we want to apply conditions to multiple field then we will use the model validator
+    @model_validator(mode='after')
+    def power_balance_validator(self): # Here the model is the model of all the objects
+        if (self.attack+self.defense)/2 < 10:
+            raise ValueError('Pokemon Too Weak Try a Pokemon with better Attack and Defence Stats')
+        return self
+    
+    '''
+    # Deprecated
+    @model_validator(mode='after')
+    def power_balance_validator(cls,model): # Here the model is the model of all the objects
+        if (model.attack+model.defense)/2 < 10:
+            raise ValueError('Pokemon Too Weak Try a Pokemon with better Attack and Defence Stats')
+        return model
+'''
 
 # Our Main function
 def load_pokemon(pokemon : Pokemon): # Now instead of getting the variables independently we get a Pokemon object , so we modify the logic accordingly.
     print(f'{pokemon.name}')
+    print(pokemon.age)
     print(pokemon.legendary) 
     print('Variables validated successfuly !')
 
  # It is smart and will convert '20' if passed into int field automatically.
 pokemon_info = {    
                     'name' : 'Ghastly' ,
-                    'age' : 1 ,
-                    'attack' : 68,
-                    'defense' : 70,
+                    'age' : '1' ,
+                    'attack' : 1,
+                    'defense' : 19,
                     'desc' : [
                                     'A cool Ghost type pokemon .'
                     ],
