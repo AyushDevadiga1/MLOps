@@ -1,0 +1,4 @@
+# Libraries 
+fastapi
+uvicorn
+pydantic
