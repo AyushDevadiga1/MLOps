@@ -29,7 +29,7 @@ load_pokemon('ghastly','one')
 
 # Now rewrittng with pydantic version
 
-from pydantic import BaseModel,EmailStr,AnyUrl,Field
+from pydantic import BaseModel,EmailStr,AnyUrl,Field,field_validator
 from typing import List,Optional,Annotated
 
 # Always use BaseModel as we dont have __init_ function and use hints to validate dtype instead .
@@ -60,7 +60,22 @@ class Pokemon(BaseModel):
                             )
                     ]
     photo : AnyUrl
-    # email : EmailStr
+    email : EmailStr
+    
+    # We use this when we have custom logic which cant be handled by the CustomDtypes by Pydantic
+    @field_validator(email) # To validate the email
+    @classmethod # To specify the method type
+
+    def email_validator(cls,value): # To pass the class instance and the value for which we are validating
+
+        valid_domains = ['gmail.com','yahoo.com']
+
+        domain_name = value.split('@')[-1]
+
+        if domain_name not in valid_domains:
+            raise ValueError('Not a Valid Domain')
+        return value
+
 
 # Our Main function
 def load_pokemon(pokemon : Pokemon): # Now instead of getting the variables independently we get a Pokemon object , so we modify the logic accordingly.
@@ -78,9 +93,9 @@ pokemon_info = {
                                     'A cool Ghost type pokemon .'
                     ],
                     'legendary' : True,
-                    'photo' : 'https://www.nicepng.com/maxp/u2w7w7q8q8w7w7e6/'
-                       
-               }
+                    'photo' : 'https://www.nicepng.com/maxp/u2w7w7q8q8w7w7e6/',
+                    'email' : 'hello@gmail.com'
+               }    
 
 poke1 = Pokemon(**pokemon_info)
 load_pokemon(poke1)
