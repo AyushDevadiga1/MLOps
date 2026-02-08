@@ -29,7 +29,7 @@ load_pokemon('ghastly','one')
 
 # Now rewrittng with pydantic version
 
-from pydantic import BaseModel,EmailStr,AnyUrl,Field,field_validator,model_validator
+from pydantic import BaseModel,EmailStr,AnyUrl,Field,field_validator,model_validator,computed_field
 from typing import List,Optional,Annotated
 
 # Always use BaseModel as we dont have __init_ function and use hints to validate dtype instead .
@@ -89,12 +89,20 @@ class Pokemon(BaseModel):
             return value
         else:
             raise ValueError('Age Should be in range 1 - 25')
-        
+    
+    @computed_field
+    @property
+    # The function name is the name of the attribute for the object
+    def average_strength(self) -> float:
+        average_strength = round((self.attack+self.defense)/2,2)
+        return average_strength
+    
+
     # Suppose if we want to apply conditions to multiple field then we will use the model validator
     @model_validator(mode='after')
     def power_balance_validator(self): # Here the model is the model of all the objects
-        if (self.attack+self.defense)/2 < 10:
-            raise ValueError('Pokemon Too Weak Try a Pokemon with better Attack and Defence Stats')
+        if self.average_strength < 10:
+            raise ValueError('Pokemon  Too Weak Try a Pokemon with better Attack and Defence Stats')
         return self
     
     '''
@@ -111,6 +119,7 @@ def load_pokemon(pokemon : Pokemon): # Now instead of getting the variables inde
     print(f'{pokemon.name}')
     print(pokemon.age)
     print(pokemon.legendary) 
+    print(pokemon.average_strength)
     print('Variables validated successfuly !')
 
  # It is smart and will convert '20' if passed into int field automatically.
