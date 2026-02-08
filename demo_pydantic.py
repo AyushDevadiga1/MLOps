@@ -32,6 +32,13 @@ load_pokemon('ghastly','one')
 from pydantic import BaseModel,EmailStr,AnyUrl,Field,field_validator,model_validator,computed_field
 from typing import List,Optional,Annotated
 
+class Achievement(BaseModel):
+
+    wins : int
+    gym_badges : List[str]
+    competition_wins : int
+
+
 # Always use BaseModel as we dont have __init_ function and use hints to validate dtype instead .
 class Pokemon(BaseModel):
 
@@ -61,6 +68,7 @@ class Pokemon(BaseModel):
                     ]
     photo : AnyUrl
     email : EmailStr
+    achievements : Achievement
     
     # We use this when we have custom logic which cant be handled by the CustomDtypes by Pydantic
     @field_validator('email') # To validate the email
@@ -116,11 +124,24 @@ class Pokemon(BaseModel):
 
 # Our Main function
 def load_pokemon(pokemon : Pokemon): # Now instead of getting the variables independently we get a Pokemon object , so we modify the logic accordingly.
-    print(f'{pokemon.name}')
-    print(pokemon.age)
-    print(pokemon.legendary) 
-    print(pokemon.average_strength)
-    print('Variables validated successfuly !')
+    # print(pokemon.age)
+    # print(pokemon.legendary) 
+    # print(pokemon.average_strength)
+    # print(pokemon.achievements.competition_wins)
+    print('-'*160)
+    print(f'Information saved successfuly for {pokemon.name} !!!')
+    print('-'*160)
+
+# Now as we added the Achievment attibute which is a nested model we have to first create an object first of it 
+# and then pass to our main model.
+
+achievement = {
+                        'wins' : 12,
+                        'gym_badges' : ['Kanto','Johto'],
+                        'competition_wins' : 0
+}
+
+achievement_1 = Achievement(**achievement)
 
  # It is smart and will convert '20' if passed into int field automatically.
 pokemon_info = {    
@@ -133,8 +154,19 @@ pokemon_info = {
                     ],
                     'legendary' : True,
                     'photo' : 'https://www.nicepng.com/maxp/u2w7w7q8q8w7w7e6/',
-                    'email' : 'hello@gmail.com'
+                    'email' : 'hello@gmail.com',
+                    'achievements' : achievement_1
                }    
-
 poke1 = Pokemon(**pokemon_info)
 load_pokemon(poke1)
+# print(poke1)
+
+# Now to Dump the Model
+
+# dump_poke1 = poke1.model_dump(exclude={'achievements' : ['competition_wins']})
+dump_poke1 = poke1.model_dump()
+
+print(f'The PokeTab for the requested pokemon : ')
+print('-_-_'*40)
+print(dump_poke1)
+print('-_-_'*40)
