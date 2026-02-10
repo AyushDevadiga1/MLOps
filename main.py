@@ -2,7 +2,7 @@
 from fastapi import FastAPI,Path,HTTPException,Query
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel,Field
-from typing import List,Annotated
+from typing import List,Annotated,Optional
 import json
 
 # The class to which we are gonna send variables when validating
@@ -66,6 +66,49 @@ class Pokemon(BaseModel):
                     )
     ]
 
+
+# The below model is exclusively for PUT method
+
+class Pokemon_update(BaseModel):
+
+    # No ID added as it will be accepted in the form of path params
+
+    name : Annotated[
+                    Optional[str],Field(  
+                                default=None,
+                                description='The name of the Pokemon'
+                    )
+    ]
+    types : Annotated[
+                    Optional[List[str]],Field(  
+                                description='A list of values which represent the type of the pokemon',
+                                default=None
+                    )
+    ]
+    hp : Annotated[
+                    Optional[int],Field(  
+                                description='An integer representing the  HP value of the pokemon',
+                                default=None
+                    )
+    ]
+    attack : Annotated[
+                    Optional[int],Field(  
+                                description='An integer representing the attack stat of the pokemon',
+                                default=None
+                    )
+    ]
+    defense : Annotated[
+                    Optional[int],Field(  
+                                description='An integer representing the defense stat of the pokemon',
+                                default=None
+                    )
+    ]
+    speed : Annotated[
+                    Optional[int],Field(  
+                                description='An integer representing the speed  of the pokemon',
+                                default=None
+                    )
+    ]
     # We dont have any complex variables which are computed from other variables,but NOTE: we can also do that 
     # below is an example
     '''
@@ -209,5 +252,50 @@ def create_pokemon(pokemon:Pokemon): # the object : our class
     )
 
     # Save the data into json file
+
+ # We now for update create a new pydantic model but this time we will create such a model that the fields
+ # are not required but are optional , as we dont know what the user wants to update.
+
+ # Also we need the pokemon id to validate the existence of the pokemon and then if then update it.
+
+@app.put('/edit/{pokemon_id}')
+def update_pokemon_info(pokemon_id : str , pokemon_update : Pokemon_update):
+    
+    data = load_data()
+
+    # Check if the pokemon_id exisS 
+    if pokemon_id not in data :
+        raise HTTPException(
+                                status_code=400,
+                                detail='Pokemon ID Does Not Exists '
+        )
+
+    existing_pokemon_info = data[pokemon_id]
+
+    updated_pokemon_info = pokemon_update.model_dump(exclude_unset=True)
+    # Why exclude_unset cause it only returns those dict elements which are send in the requesting body by the user
+
+    for key,value in updated_pokemon_info.items():
+        existing_pokemon_info[key] = value
+        
+    '''
+    # Now below is the code If we had some fields that might need to be recalculated whent the field are udpated:
+    # so first we create a new dict object having the new updated values
+
+    existing_pokemon_info['id'] = pokemon_id # 
+    pokemon_pydantic_obj = Pokemon(**existing_pokemon_info)
+
+    pokemon_pydantic_obj = pokemon_pydantic_obj.model_dump(exclude='id')
+    '''
+
+    data[pokemon_id] = existing_pokemon_info
+
+    # SAVE data
+    write_data(data)
+
+    return JSONResponse(
+                            status_code=200,
+                            content = 'Pokemon info updated successfully.'
+    )
 
     # demo url : http://localhost:8000/sort?sort_by=attack&order=desc | http://localhost:8000/docs
