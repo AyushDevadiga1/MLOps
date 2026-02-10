@@ -34,8 +34,8 @@ class Pokemon(BaseModel):
                                 ...,
                                 description='An integer representing the  HP value of the pokemon',
                                 examples = ['69'],
-                                lt=100,
-                                gt=0
+                                le=255,
+                                ge=0
                     )
     ]
     attack : Annotated[
@@ -43,8 +43,8 @@ class Pokemon(BaseModel):
                                 ...,
                                 description='An integer representing the attack stat of the pokemon',
                                 examples = ['33'],
-                                lt=100,
-                                gt=0
+                                le=255,
+                                ge=0
                     )
     ]
     defense : Annotated[
@@ -52,8 +52,8 @@ class Pokemon(BaseModel):
                                 ...,
                                 description='An integer representing the defense stat of the pokemon',
                                 examples = ['22'],
-                                lt=100,
-                                gt=0
+                                le=255,
+                                ge=0
                     )
     ]
     speed : Annotated[
@@ -61,8 +61,8 @@ class Pokemon(BaseModel):
                                 ...,
                                 description='An integer representing the speed  of the pokemon',
                                 examples = ['98'],
-                                lt=100,
-                                gt=0
+                                le=150,
+                                ge=0
                     )
     ]
 
@@ -102,7 +102,7 @@ def load_data():
 # A simple helper function to write data 
 def write_data(data):
     with open(file_path,'w') as f:
-        json.dump(data,f)
+        json.dump(data,f,indent=4)
 
 # The Main Pokemon Management System Page
 @app.get('/')
@@ -162,7 +162,7 @@ def sort_pokemons(
     # Check whether the fields are valid or not
     if sort_by not in valid_fields:
         raise HTTPException(
-                            status_code=404,
+                            status_code=400,
                             detail = f' Invalid field select from valid_fields : {valid_fields} '
         )
     
@@ -199,7 +199,7 @@ def create_pokemon(pokemon:Pokemon): # the object : our class
 
     # Now the logic for adding the id if the Pokemon id doesnt exist :
 
-    data[pokemon.id] = pokemon.model_dump(exclude=['id'])
+    data[pokemon.id] = pokemon.model_dump(exclude={'id'}) # The curly braces is needed as 
 
     write_data(data)
 

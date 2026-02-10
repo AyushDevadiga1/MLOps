@@ -1,27 +1,276 @@
 {
-    "1": {"name": "Bulbasaur", "types": ["Grass", "Poison"], "hp": 45, "attack": 49, "defense": 49, "speed": 45},
-    "2": {"name": "Ivysaur", "types": ["Grass", "Poison"], "hp": 60, "attack": 62, "defense": 63, "speed": 60},
-    "3": {"name": "Venusaur", "types": ["Grass", "Poison"], "hp": 80, "attack": 82, "defense": 83, "speed": 80},
-    "4": {"name": "Charmander", "types": ["Fire"], "hp": 39, "attack": 52, "defense": 43, "speed": 65},
-    "5": {"name": "Charmeleon", "types": ["Fire"], "hp": 58, "attack": 64, "defense": 58, "speed": 80},
-    "6": {"name": "Charizard", "types": ["Fire", "Flying"], "hp": 78, "attack": 84, "defense": 78, "speed": 100},
-    "7": {"name": "Squirtle", "types": ["Water"], "hp": 44, "attack": 48, "defense": 65, "speed": 43},
-    "8": {"name": "Wartortle", "types": ["Water"], "hp": 59, "attack": 63, "defense": 80, "speed": 58},
-    "9": {"name": "Blastoise", "types": ["Water"], "hp": 79, "attack": 83, "defense": 100, "speed": 78},
-    "10": {"name": "Caterpie", "types": ["Bug"], "hp": 45, "attack": 30, "defense": 35, "speed": 45},
-    "11": {"name": "Metapod", "types": ["Bug"], "hp": 50, "attack": 20, "defense": 55, "speed": 30},
-    "12": {"name": "Butterfree", "types": ["Bug", "Flying"], "hp": 60, "attack": 45, "defense": 50, "speed": 70},
-    "13": {"name": "Weedle", "types": ["Bug", "Poison"], "hp": 40, "attack": 35, "defense": 30, "speed": 50},
-    "14": {"name": "Kakuna", "types": ["Bug", "Poison"], "hp": 45, "attack": 25, "defense": 50, "speed": 35},
-    "15": {"name": "Beedrill", "types": ["Bug", "Poison"], "hp": 65, "attack": 90, "defense": 40, "speed": 75},
-    "16": {"name": "Pidgey", "types": ["Normal", "Flying"], "hp": 40, "attack": 45, "defense": 40, "speed": 56},
-    "17": {"name": "Pidgeotto", "types": ["Normal", "Flying"], "hp": 63, "attack": 60, "defense": 55, "speed": 71},
-    "18": {"name": "Pidgeot", "types": ["Normal", "Flying"], "hp": 83, "attack": 80, "defense": 75, "speed": 101},
-    "19": {"name": "Rattata", "types": ["Normal"], "hp": 30, "attack": 56, "defense": 35, "speed": 72},
-    "20": {"name": "Raticate", "types": ["Normal"], "hp": 55, "attack": 81, "defense": 60, "speed": 97},
-    "21": {"name": "Spearow", "types": ["Normal", "Flying"], "hp": 40, "attack": 60, "defense": 30, "speed": 70},
-    "22": {"name": "Fearow", "types": ["Normal", "Flying"], "hp": 65, "attack": 90, "defense": 65, "speed": 100},
-    "23": {"name": "Ekans", "types": ["Poison"], "hp": 35, "attack": 60, "defense": 44, "speed": 55},
-    "24": {"name": "Arbok", "types": ["Poison"], "hp": 60, "attack": 95, "defense": 69, "speed": 80},
-    "25": {"name": "Pikachu", "types": ["Electric"], "hp": 35, "attack": 55, "defense": 40, "speed": 90}
+    "1": {
+        "name": "Bulbasaur",
+        "types": [
+            "Grass",
+            "Poison"
+        ],
+        "hp": 45,
+        "attack": 49,
+        "defense": 49,
+        "speed": 45
+    },
+    "2": {
+        "name": "Ivysaur",
+        "types": [
+            "Grass",
+            "Poison"
+        ],
+        "hp": 60,
+        "attack": 62,
+        "defense": 63,
+        "speed": 60
+    },
+    "3": {
+        "name": "Venusaur",
+        "types": [
+            "Grass",
+            "Poison"
+        ],
+        "hp": 80,
+        "attack": 82,
+        "defense": 83,
+        "speed": 80
+    },
+    "4": {
+        "name": "Charmander",
+        "types": [
+            "Fire"
+        ],
+        "hp": 39,
+        "attack": 52,
+        "defense": 43,
+        "speed": 65
+    },
+    "5": {
+        "name": "Charmeleon",
+        "types": [
+            "Fire"
+        ],
+        "hp": 58,
+        "attack": 64,
+        "defense": 58,
+        "speed": 80
+    },
+    "6": {
+        "name": "Charizard",
+        "types": [
+            "Fire",
+            "Flying"
+        ],
+        "hp": 78,
+        "attack": 84,
+        "defense": 78,
+        "speed": 100
+    },
+    "7": {
+        "name": "Squirtle",
+        "types": [
+            "Water"
+        ],
+        "hp": 44,
+        "attack": 48,
+        "defense": 65,
+        "speed": 43
+    },
+    "8": {
+        "name": "Wartortle",
+        "types": [
+            "Water"
+        ],
+        "hp": 59,
+        "attack": 63,
+        "defense": 80,
+        "speed": 58
+    },
+    "9": {
+        "name": "Blastoise",
+        "types": [
+            "Water"
+        ],
+        "hp": 79,
+        "attack": 83,
+        "defense": 100,
+        "speed": 78
+    },
+    "10": {
+        "name": "Caterpie",
+        "types": [
+            "Bug"
+        ],
+        "hp": 45,
+        "attack": 30,
+        "defense": 35,
+        "speed": 45
+    },
+    "11": {
+        "name": "Metapod",
+        "types": [
+            "Bug"
+        ],
+        "hp": 50,
+        "attack": 20,
+        "defense": 55,
+        "speed": 30
+    },
+    "12": {
+        "name": "Butterfree",
+        "types": [
+            "Bug",
+            "Flying"
+        ],
+        "hp": 60,
+        "attack": 45,
+        "defense": 50,
+        "speed": 70
+    },
+    "13": {
+        "name": "Weedle",
+        "types": [
+            "Bug",
+            "Poison"
+        ],
+        "hp": 40,
+        "attack": 35,
+        "defense": 30,
+        "speed": 50
+    },
+    "14": {
+        "name": "Kakuna",
+        "types": [
+            "Bug",
+            "Poison"
+        ],
+        "hp": 45,
+        "attack": 25,
+        "defense": 50,
+        "speed": 35
+    },
+    "15": {
+        "name": "Beedrill",
+        "types": [
+            "Bug",
+            "Poison"
+        ],
+        "hp": 65,
+        "attack": 90,
+        "defense": 40,
+        "speed": 75
+    },
+    "16": {
+        "name": "Pidgey",
+        "types": [
+            "Normal",
+            "Flying"
+        ],
+        "hp": 40,
+        "attack": 45,
+        "defense": 40,
+        "speed": 56
+    },
+    "17": {
+        "name": "Pidgeotto",
+        "types": [
+            "Normal",
+            "Flying"
+        ],
+        "hp": 63,
+        "attack": 60,
+        "defense": 55,
+        "speed": 71
+    },
+    "18": {
+        "name": "Pidgeot",
+        "types": [
+            "Normal",
+            "Flying"
+        ],
+        "hp": 83,
+        "attack": 80,
+        "defense": 75,
+        "speed": 101
+    },
+    "19": {
+        "name": "Rattata",
+        "types": [
+            "Normal"
+        ],
+        "hp": 30,
+        "attack": 56,
+        "defense": 35,
+        "speed": 72
+    },
+    "20": {
+        "name": "Raticate",
+        "types": [
+            "Normal"
+        ],
+        "hp": 55,
+        "attack": 81,
+        "defense": 60,
+        "speed": 97
+    },
+    "21": {
+        "name": "Spearow",
+        "types": [
+            "Normal",
+            "Flying"
+        ],
+        "hp": 40,
+        "attack": 60,
+        "defense": 30,
+        "speed": 70
+    },
+    "22": {
+        "name": "Fearow",
+        "types": [
+            "Normal",
+            "Flying"
+        ],
+        "hp": 65,
+        "attack": 90,
+        "defense": 65,
+        "speed": 100
+    },
+    "23": {
+        "name": "Ekans",
+        "types": [
+            "Poison"
+        ],
+        "hp": 35,
+        "attack": 60,
+        "defense": 44,
+        "speed": 55
+    },
+    "24": {
+        "name": "Arbok",
+        "types": [
+            "Poison"
+        ],
+        "hp": 60,
+        "attack": 95,
+        "defense": 69,
+        "speed": 80
+    },
+    "25": {
+        "name": "Pikachu",
+        "types": [
+            "Electric"
+        ],
+        "hp": 35,
+        "attack": 55,
+        "defense": 40,
+        "speed": 90
+    },
+    "26": {
+        "name": "Raichu",
+        "types": [
+            "Grass",
+            "Water"
+        ],
+        "hp": 69,
+        "attack": 33,
+        "defense": 22,
+        "speed": 98
+    }
 }
