@@ -1,6 +1,70 @@
 # Libraries
 from fastapi import FastAPI,Path,HTTPException,Query
+from pydantic import BaseModel,Field
+from typing import List,Annotated
 import json
+
+# The class to which we are gonna send variables when validating
+class Pokemon(BaseModel):
+    # Now the variables here will be the same as the variables in pokemon.json
+    id : Annotated[
+                    str,Field(  
+                                ...,
+                                description='An Integer value ID for the pokemon',
+                                examples = ['10']
+                    )
+    ]
+    name : Annotated[
+                    str,Field(  
+                                ...,
+                                description='The name of the Pokemon',
+                                examples = ['Raichu']
+                    )
+    ]
+    types : Annotated[
+                    List[str],Field(  
+                                ...,
+                                description='A list of values which represent the type of the pokemon',
+                                examples = [['Grass' , 'Water']]
+                    )
+    ]
+    hp : Annotated[
+                    int,Field(  
+                                ...,
+                                description='An integer representing the  HP value of the pokemon',
+                                examples = ['69'],
+                                lt=100,
+                                gt=0
+                    )
+    ]
+    attack : Annotated[
+                    int,Field(  
+                                ...,
+                                description='An integer representing the attack stat of the pokemon',
+                                examples = ['33'],
+                                lt=100,
+                                gt=0
+                    )
+    ]
+    defense : Annotated[
+                    int,Field(  
+                                ...,
+                                description='An integer representing the defense stat of the pokemon',
+                                examples = ['22'],
+                                lt=100,
+                                gt=0
+                    )
+    ]
+    speed : Annotated[
+                    int,Field(  
+                                ...,
+                                description='An integer representing the speed  of the pokemon',
+                                examples = ['98'],
+                                lt=100,
+                                gt=0
+                    )
+    ]
+    # We dont have any complex variables which are calculated from other variables,but NOTE: we can also do this 
 
 # App object Instantiated
 app = FastAPI()
@@ -89,5 +153,11 @@ def sort_pokemons(
     )
 
     return dict(sorted_data)
+
+# Now we have finished the Read part of the CRUD operations , but we need a request body for the other operations.
+# The request body is the portion of the HTTP request that contains data sent by the client to the server typically used in 
+# methods like PUT,POST and DELETE.
+
+
 
     # demo url : http://localhost:8000/sort?sort_by=attack&order=desc | http://localhost:8000/docs
