@@ -174,7 +174,7 @@ def view_pokemon(pokemon_id:str = Path(
                                             # Path Function parameters and Validation.
                                             ...,
                                             description = 'A Integer Number ID of the Pokemon',
-                                            example = '10'
+                                            examples = '10'
                             )
 ):
 
