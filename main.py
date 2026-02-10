@@ -298,4 +298,28 @@ def update_pokemon_info(pokemon_id : str , pokemon_update : Pokemon_update):
                             content = 'Pokemon info updated successfully.'
     )
 
+# Now creating the DELETE endpoint
+@app.delete('/delete/{pokemon_id}')
+def delete_pokemon(pokemon_id : str):
+
+    # Load Data
+    data = load_data()
+
+    # Check if the pokemon_id exisS 
+    if pokemon_id not in data :
+        raise HTTPException(
+                                status_code=400,
+                                detail='Pokemon ID Does Not Exists '
+        )
+    
+    # Delete the pokemon based on id
+    del data[pokemon_id]
+
+    write_data(data)
+
+    return JSONResponse(
+                            status_code = 200,
+                            content = 'Pokemon Deleted Successfully'
+    )
+
     # demo url : http://localhost:8000/sort?sort_by=attack&order=desc | http://localhost:8000/docs
