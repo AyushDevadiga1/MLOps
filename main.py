@@ -1,75 +1,12 @@
 # Libraries
 from fastapi import FastAPI,Path,HTTPException,Query
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel,Field
-from typing import List,Annotated,Optional
 import json
 
-# Modularity Imports
+# Modularity Imports --> Reduces Bulky code and increases modularity and is scalable
 from schemas.Pokemon import Pokemon
+from schemas.Pokemon_update import Pokemon_update
 
-# The below model is exclusively for PUT method
-
-class Pokemon_update(BaseModel):
-
-    # No ID added as it will be accepted in the form of path params
-
-    name : Annotated[
-                    Optional[str],Field(  
-                                default=None,
-                                description='The name of the Pokemon'
-                    )
-    ]
-    types : Annotated[
-                    Optional[List[str]],Field(  
-                                description='A list of values which represent the type of the pokemon',
-                                default=None
-                    )
-    ]
-    hp : Annotated[
-                    Optional[int],Field(  
-                                description='An integer representing the  HP value of the pokemon',
-                                default=None
-                    )
-    ]
-    attack : Annotated[
-                    Optional[int],Field(  
-                                description='An integer representing the attack stat of the pokemon',
-                                default=None
-                    )
-    ]
-    defense : Annotated[
-                    Optional[int],Field(  
-                                description='An integer representing the defense stat of the pokemon',
-                                default=None
-                    )
-    ]
-    speed : Annotated[
-                    Optional[int],Field(  
-                                description='An integer representing the speed  of the pokemon',
-                                default=None
-                    )
-    ]
-    # We dont have any complex variables which are computed from other variables,but NOTE: we can also do that 
-    # below is an example
-    '''
-    
-    @computed_field
-    @property
-    # The function name is the name of the attribute for the object
-    def average_strength(self) -> float:
-        average_strength = round((self.attack+self.defense)/2,2)
-        return average_strength
-    
-
-    # Suppose if we want to apply conditions to multiple field then we will use the model validator
-    @model_validator(mode='after')
-    def power_balance_validator(self): # Here the model is the model of all the objects
-        if self.average_strength < 10:
-            raise ValueError('Pokemon  Too Weak Try a Pokemon with better Attack and Defence Stats')
-        return self
-    
-    '''
 
 # App object Instantiated
 app = FastAPI()

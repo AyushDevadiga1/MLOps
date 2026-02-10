@@ -61,3 +61,23 @@ class Pokemon(BaseModel):
                                 ge=0
                     )
     ]
+    # We dont have any complex variables which are computed from other variables,but NOTE: we can also do that 
+    # below is an example
+    '''
+    
+    @computed_field
+    @property
+    # The function name is the name of the attribute for the object
+    def average_strength(self) -> float:
+        average_strength = round((self.attack+self.defense)/2,2)
+        return average_strength
+    
+
+    # Suppose if we want to apply conditions to multiple field then we will use the model validator
+    @model_validator(mode='after')
+    def power_balance_validator(self): # Here the model is the model of all the objects
+        if self.average_strength < 10:
+            raise ValueError('Pokemon  Too Weak Try a Pokemon with better Attack and Defence Stats')
+        return self
+    
+    '''
