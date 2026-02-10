@@ -1,5 +1,6 @@
 # Libraries
 from fastapi import FastAPI,Path,HTTPException,Query
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel,Field
 from typing import List,Annotated
 import json
@@ -64,7 +65,27 @@ class Pokemon(BaseModel):
                                 gt=0
                     )
     ]
-    # We dont have any complex variables which are calculated from other variables,but NOTE: we can also do this 
+
+    # We dont have any complex variables which are computed from other variables,but NOTE: we can also do that 
+    # below is an example
+    '''
+    
+    @computed_field
+    @property
+    # The function name is the name of the attribute for the object
+    def average_strength(self) -> float:
+        average_strength = round((self.attack+self.defense)/2,2)
+        return average_strength
+    
+
+    # Suppose if we want to apply conditions to multiple field then we will use the model validator
+    @model_validator(mode='after')
+    def power_balance_validator(self): # Here the model is the model of all the objects
+        if self.average_strength < 10:
+            raise ValueError('Pokemon  Too Weak Try a Pokemon with better Attack and Defence Stats')
+        return self
+    
+    '''
 
 # App object Instantiated
 app = FastAPI()
@@ -77,6 +98,11 @@ def load_data():
     with open(file_path,'r') as f:
         data = json.load(f)
     return data
+
+# A simple helper function to write data 
+def write_data(data):
+    with open(file_path,'w') as f:
+        json.dump(data,f)
 
 # The Main Pokemon Management System Page
 @app.get('/')
@@ -158,6 +184,30 @@ def sort_pokemons(
 # The request body is the portion of the HTTP request that contains data sent by the client to the server typically used in 
 # methods like PUT,POST and DELETE.
 
+@app.post('/create') 
+def create_pokemon(pokemon:Pokemon): # the object : our class
 
+    # Load Existing data 
+    data = load_data()
+
+    # Check if the pokemon_id already exist 
+    if pokemon.id in data :
+        raise HTTPException(
+                                status_code=400,
+                                detail='Pokemon ID Already Exists '
+        )
+
+    # Now the logic for adding the id if the Pokemon id doesnt exist :
+
+    data[pokemon.id] = pokemon.model_dump(exclude=['id'])
+
+    write_data(data)
+
+    return JSONResponse(
+                            status_code=201,
+                            content = 'Pokemon Added Successfully'
+    )
+
+    # Save the data into json file
 
     # demo url : http://localhost:8000/sort?sort_by=attack&order=desc | http://localhost:8000/docs
