@@ -8,7 +8,7 @@ class Pokemon(BaseModel):
                     str,Field(  
                                 ...,
                                 description='An Integer value ID for the pokemon',
-                                examples = ['10']
+                                examples = ['26']
                     )
     ]
     name : Annotated[

@@ -1,4 +1,5 @@
 # Libraries
+import os
 from fastapi import FastAPI,Path,HTTPException,Query
 from fastapi.responses import JSONResponse
 import json
@@ -10,8 +11,16 @@ from schemas.Pokemon_update import Pokemon_update
 # App object Instantiated
 app = FastAPI()
 
-# Path to data.
-file_path = 'pokemon.json'
+# The two steps below are absolutely essential when dealing with the projects inside a folder,
+# cause uvicorn need to where the base main function is located and with the base directory
+#  we can append the other paths and connect modules with each other.
+
+# 1. Get the directory where main.py is actually located
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# 2. Build the path to the data file from that directory
+file_path = os.path.join(BASE_DIR, "data", "pokemon.json")
+
 
 # A simple helper function to load data and return pokemon data.
 def load_data():
@@ -200,3 +209,5 @@ def delete_pokemon(pokemon_id : str):
     )
 
     # demo url : http://localhost:8000/sort?sort_by=attack&order=desc | http://localhost:8000/docs
+
+    
