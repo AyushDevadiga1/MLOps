@@ -7,7 +7,6 @@ import json
 from schemas.Pokemon import Pokemon
 from schemas.Pokemon_update import Pokemon_update
 
-
 # App object Instantiated
 app = FastAPI()
 
